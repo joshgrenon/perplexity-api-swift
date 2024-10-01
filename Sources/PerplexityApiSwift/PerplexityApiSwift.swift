@@ -37,23 +37,79 @@ public class PerplexityApiSwift {
             frequencyPenalty: 1
         )
         
-        request.httpBody = try JSONEncoder().encode(body)
+        // Log request details
+        print("Request URL: \(url)")
+        print("Request Headers:")
+        request.allHTTPHeaderFields?.forEach { key, value in
+            print("\(key): \(value)")
+        }
+        
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let jsonData = try encoder.encode(body)
+            request.httpBody = jsonData
+            
+            print("Request Body:")
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                print(jsonString)
+            }
+        } catch {
+            throw PerplexityError.encodingError(error)
+        }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
-            throw PerplexityError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 500)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw PerplexityError.invalidResponse(statusCode: 0)
         }
         
-        let perplexityResponse = try JSONDecoder().decode(PerplexityResponse.self, from: data)
-        return perplexityResponse
+        print("Response Status Code: \(httpResponse.statusCode)")
+        print("Response Headers:")
+        httpResponse.allHeaderFields.forEach { key, value in
+            print("\(key): \(value)")
+        }
+        
+        print("Response Body:")
+        if let responseString = String(data: data, encoding: .utf8) {
+            print(responseString)
+        }
+        
+        if !(200...299).contains(httpResponse.statusCode) {
+            throw PerplexityError.apiError(statusCode: httpResponse.statusCode, data: data)
+        }
+        
+        do {
+            let perplexityResponse = try JSONDecoder().decode(PerplexityResponse.self, from: data)
+            return perplexityResponse
+        } catch {
+            throw PerplexityError.decodingError(error)
+        }
     }
 }
 
 // MARK: - Error Handling
 
-public enum PerplexityError: Error {
+public enum PerplexityError: Error, LocalizedError {
     case tokenNotSet
     case invalidResponse(statusCode: Int)
-    case invalidResponseFormat
+    case apiError(statusCode: Int, data: Data)
+    case encodingError(Error)
+    case decodingError(Error)
+    
+    public var errorDescription: String? {
+        switch self {
+        case .tokenNotSet:
+            return "API token not set"
+        case .invalidResponse(let statusCode):
+            return "Invalid response (Status \(statusCode))"
+        case .apiError(let statusCode, let data):
+            let message = String(data: data, encoding: .utf8) ?? "No error message"
+            return "API error (Status \(statusCode)): \(message)"
+        case .encodingError(let error):
+            return "Error encoding request: \(error.localizedDescription)"
+        case .decodingError(let error):
+            return "Error decoding response: \(error.localizedDescription)"
+        }
+    }
 }
