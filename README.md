@@ -67,11 +67,3 @@ PerplexityApiSwift defines a `PerplexityError` enum for common errors:
 For more detailed information about the Perplexity AI API, please refer to the official documentation:
 
 [Perplexity AI API Documentation](https://docs.perplexity.ai/)
-
-## License
-
-[Add your license information here]
-
-## Contributing
-
-[Add contribution guidelines if applicable]
