@@ -1,5 +1,14 @@
 # PerplexityApiSwift
 
+<p>
+    <img src="https://img.shields.io/badge/iOS-16.0+-blue.svg" />
+    <img src="https://img.shields.io/badge/Swift-5.5+-ff69b4.svg" />
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" />
+    <a href="https://twitter.com/joshgrenon">
+        <img src="https://img.shields.io/badge/Contact-@joshgrenon-lightgrey.svg?style=flat" alt="Twitter: @joshgrenon" />
+    </a>
+</p>
+
 PerplexityApiSwift is a Swift framework that provides a convenient wrapper for the Perplexity AI API. This framework simplifies the process of making chat completion requests to Perplexity's advanced language models.
 
 ## Features
@@ -9,31 +18,53 @@ PerplexityApiSwift is a Swift framework that provides a convenient wrapper for t
 - Asynchronous API calls using Swift's modern concurrency features
 - Built-in error handling for common API issues
 
-## Quick Start
+## Basic usage
 
-1. Initialize the API client with your token:
-   ```swift
-   let api = PerplexityAPI(token: "your_api_token_here")
-   ```
+To use PerplexityApiSwift, you need to create an instance of `PerplexityAPI` with your API token and then make chat completion requests. Here's a basic example:
 
-2. Make a chat completion request:
-   ```swift
-   let messages = [Message(role: "user", content: "Hello, AI!")]
-   let response = try await api.chatCompletion(messages: messages, model: .sonarLarge)
-   ```
+```swift
+import PerplexityApiSwift
 
-## Models
+// Initialize the API client
+let api = PerplexityAPI(token: "your_api_token_here")
 
-The framework supports various Perplexity AI models, including:
-- Sonar (small, medium, large)
-- CodeLlama-34b
-- Llama-2-70b
-- Mistral-7b
-- Mixtral-8x7b
+// Create a message
+let messages = [Message(role: "user", content: "What is the capital of France?")]
+
+// Make a chat completion request
+do {
+    let response = try await api.chatCompletion(messages: messages, model: .sonarLarge)
+    print(response.choices.first?.message.content ?? "No response")
+} catch {
+    print("Error: \(error)")
+}
+```
+
+**Important:** You need to obtain an API token from Perplexity AI to use this framework. Make sure to keep your token secure and never share it publicly.
+
+## Available Models
+
+The framework supports various Perplexity AI models through the `PerplexityModel` enum:
+
+- `.sonar`
+- `.sonarMedium`
+- `.sonarLarge`
+- `.codellama34b`
+- `.llama2_70b`
+- `.mistral7b`
+- `.mixtral8x7b`
+
+## Error Handling
+
+PerplexityApiSwift defines a `PerplexityError` enum for common errors:
+
+- `.tokenNotSet`: The API token has not been set
+- `.invalidResponse(statusCode:)`: The API returned an invalid response with the given status code
+- `.invalidResponseFormat`: The API response could not be decoded
 
 ## Documentation
 
-For detailed information about the Perplexity AI API, including available endpoints, request/response formats, and model capabilities, please refer to the official documentation:
+For more detailed information about the Perplexity AI API, please refer to the official documentation:
 
 [Perplexity AI API Documentation](https://docs.perplexity.ai/)
 

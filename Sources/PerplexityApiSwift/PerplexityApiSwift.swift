@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Perplexity API Client
 
-public class PerplexityAPI {
+public class PerplexityApiSwift {
     private var bearerToken: String?
     
     public init(token: String? = nil) {
