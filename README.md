@@ -46,13 +46,13 @@ do {
 
 The framework supports various Perplexity AI models through the `PerplexityModel` enum:
 
-- `.sonar`
-- `.sonarMedium`
-- `.sonarLarge`
-- `.codellama34b`
-- `.llama2_70b`
-- `.mistral7b`
-- `.mixtral8x7b`
+- `.sonarSmallOnline`: "llama-3.1-sonar-small-128k-online"
+- `.sonarLargeOnline`: "llama-3.1-sonar-large-128k-online"
+- `.sonarHugeOnline`: "llama-3.1-sonar-huge-128k-online"
+- `.sonarSmallChat`: "llama-3.1-sonar-small-128k-chat"
+- `.sonarLargeChat`: "llama-3.1-sonar-large-128k-chat"
+- `.llama8bInstruct`: "llama-3.1-8b-instruct"
+- `.llama70bInstruct`: "llama-3.1-70b-instruct"
 
 ## Error Handling
 
