@@ -1,13 +1,15 @@
 import Foundation
 
 public enum PerplexityModel: String {
-    case sonarSmallOnline = "llama-3.1-sonar-small-128k-online"
-    case sonarLargeOnline = "llama-3.1-sonar-large-128k-online"
-    case sonarHugeOnline = "llama-3.1-sonar-huge-128k-online"
-    case sonarSmallChat = "llama-3.1-sonar-small-128k-chat"
-    case sonarLargeChat = "llama-3.1-sonar-large-128k-chat"
-    case llama8bInstruct = "llama-3.1-8b-instruct"
-    case llama70bInstruct = "llama-3.1-70b-instruct"
+    // Research and Reasoning Models
+    case sonarDeepResearch = "sonar-deep-research"    // 128k context
+    case sonarReasoningPro = "sonar-reasoning-pro"    // 128k context
+    case sonarReasoning = "sonar-reasoning"           // 128k context
+    
+    // General Purpose Models
+    case sonarPro = "sonar-pro"                       // 200k context
+    case sonar = "sonar"                              // 128k context
+    case r1_1776 = "r1-1776"                         // 128k context
 }
 
 // We can keep this enum if it's still useful for your application

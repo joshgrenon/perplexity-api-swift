@@ -33,7 +33,7 @@ let messages = [Message(role: "user", content: "What is the capital of France?")
 
 // Make a chat completion request
 do {
-    let response = try await api.chatCompletion(messages: messages, model: .sonarLarge)
+    let response = try await api.chatCompletion(messages: messages, model: .sonar)
     print(response.choices.first?.message.content ?? "No response")
 } catch {
     print("Error: \(error)")
@@ -46,13 +46,15 @@ do {
 
 The framework supports various Perplexity AI models through the `PerplexityModel` enum:
 
-- `.sonarSmallOnline`: "llama-3.1-sonar-small-128k-online"
-- `.sonarLargeOnline`: "llama-3.1-sonar-large-128k-online"
-- `.sonarHugeOnline`: "llama-3.1-sonar-huge-128k-online"
-- `.sonarSmallChat`: "llama-3.1-sonar-small-128k-chat"
-- `.sonarLargeChat`: "llama-3.1-sonar-large-128k-chat"
-- `.llama8bInstruct`: "llama-3.1-8b-instruct"
-- `.llama70bInstruct`: "llama-3.1-70b-instruct"
+### Research and Reasoning Models
+- `.sonarDeepResearch`: Advanced research model with 128K context length
+- `.sonarReasoningPro`: Enhanced reasoning model with 128K context length
+- `.sonarReasoning`: Base reasoning model with 128K context length
+
+### General Purpose Models
+- `.sonarPro`: Professional model with 200K context length
+- `.sonar`: Standard model with 128K context length
+- `.r1_1776`: Base model with 128K context length
 
 ## Error Handling
 
@@ -61,6 +63,13 @@ PerplexityApiSwift defines a `PerplexityError` enum for common errors:
 - `.tokenNotSet`: The API token has not been set
 - `.invalidResponse(statusCode:)`: The API returned an invalid response with the given status code
 - `.invalidResponseFormat`: The API response could not be decoded
+
+## Upcoming Features
+
+The following features are planned for future releases:
+
+- **Structured Outputs**: Support for receiving structured, typed responses from the API
+- **Streaming Response**: Real-time streaming of model responses for improved user experience
 
 ## Documentation
 
