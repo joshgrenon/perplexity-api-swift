@@ -9,7 +9,7 @@ public class PerplexityApiSwift {
         self.bearerToken = token
     }
     
-    public func chatCompletion(messages: [Message], model: PerplexityModel = .sonarLargeOnline) async throws -> PerplexityResponse {
+    public func chatCompletion(messages: [Message], model: PerplexityModel = .sonar) async throws -> PerplexityResponse {
         guard let bearerToken = bearerToken else {
             throw PerplexityError.tokenNotSet
         }
