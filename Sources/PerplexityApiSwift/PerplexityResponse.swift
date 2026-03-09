@@ -7,6 +7,40 @@ public struct PerplexityResponse: Codable {
     public let created: Int
     public let choices: [Choice]
     public let usage: Usage
+    public let citations: [String]?
+    public let searchResults: [SearchResult]?
+    public let images: [ImageResult]?
+    public let relatedQuestions: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case id, model, object, created, choices, usage, citations, images
+        case searchResults = "search_results"
+        case relatedQuestions = "related_questions"
+    }
+}
+
+public struct SearchResult: Codable {
+    public let title: String?
+    public let url: String?
+    public let date: String?
+    public let lastUpdated: String?
+
+    enum CodingKeys: String, CodingKey {
+        case title, url, date
+        case lastUpdated = "last_updated"
+    }
+}
+
+public struct ImageResult: Codable {
+    public let url: String?
+    public let originURL: String?
+    public let height: Int?
+    public let width: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case url, height, width
+        case originURL = "origin_url"
+    }
 }
 
 public struct Choice: Codable {

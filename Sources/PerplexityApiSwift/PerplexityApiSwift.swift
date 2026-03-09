@@ -9,7 +9,7 @@ public class PerplexityApiSwift {
         self.bearerToken = token
     }
     
-    public func chatCompletion(messages: [Message], model: PerplexityModel = .sonar) async throws -> PerplexityResponse {
+    public func chatCompletion(messages: [Message], model: PerplexityModel = .sonarPro) async throws -> PerplexityResponse {
         guard let bearerToken = bearerToken else {
             throw PerplexityError.tokenNotSet
         }
@@ -26,15 +26,17 @@ public class PerplexityApiSwift {
             maxTokens: nil,
             temperature: 0.2,
             topP: 0.9,
-            returnCitations: false,
-            searchDomainFilter: nil,
-            returnImages: false,
-            returnRelatedQuestions: false,
-            searchRecencyFilter: nil,
-            topK: 0,
             stream: false,
-            presencePenalty: 0,
-            frequencyPenalty: 1
+            stop: nil,
+            disableSearch: nil,
+            searchMode: nil,
+            searchDomainFilter: nil,
+            searchLanguageFilter: nil,
+            searchRecencyFilter: nil,
+            returnImages: nil,
+            returnRelatedQuestions: nil,
+            reasoningEffort: nil,
+            languagePreference: nil
         )
         
         // Log request details
